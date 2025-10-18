@@ -8,16 +8,16 @@ git submodule update
 # Update
 git submodule update --remote --recursive
 ```
-Make sure to pass your current user's UID/GID in .devcontainer.json
+## Build
+Build the image
+```
+docker build -t devpod .
+```
+Reference it in a `.devcontainer.json`.
 ```
 {
- "build": {
-   "dockerfile": "~/Dockerfile",
-   "args": {
-     "USER_UID": "1000",
-     "USER_GID": "1000"
-   }
- },
- "remoteUser": "devuser"
+  "name": "hashbot",
+  "image": "devpod",
+  "remoteUser": "devuser"
 }
 ```
