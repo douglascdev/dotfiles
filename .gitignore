@@ -8,7 +8,8 @@
 !.config/hypr
 !.config/waybar
 !.config/nvim
+!dev-environments
+!dev-environments/*
 
 !install.sh
 !.gitignore
-!Dockerfile
