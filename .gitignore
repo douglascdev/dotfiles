@@ -1,0 +1,13 @@
+# Ignore everything
+*
+
+# Except
+!.bashrc
+!.config
+.config/*
+!.config/hypr
+!.config/waybar
+!.config/nvim
+
+!install.sh
+!.gitignore
