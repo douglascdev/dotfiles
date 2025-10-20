@@ -1,7 +1,7 @@
 #!/bin/bash
 # set up dot files in devpod: https://devpod.sh/docs/developing-in-workspaces/dotfiles-in-a-workspace
 
-cd ~
+cd /home/$USER
 mv dotfiles/* .
 mv dotfiles/.* .
 
