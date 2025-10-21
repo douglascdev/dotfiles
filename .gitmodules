@@ -8,3 +8,6 @@
 [submodule ".config/hypr"]
 	path = .config/hypr
 	url = https://github.com/douglascdev/hyprland-dotfiles
+[submodule ".config/alacritty"]
+	path = .config/alacritty
+	url = https://github.com/douglascdev/alacritty-dotfiles

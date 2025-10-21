@@ -8,6 +8,7 @@
 !.config/hypr
 !.config/waybar
 !.config/nvim
+!.config/alacritty
 !dev-environments
 !dev-environments/*
 
