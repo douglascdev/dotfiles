@@ -8,6 +8,7 @@ RUN mv dotfiles/* .
 RUN mv dotfiles/.* .
 RUN git submodule init
 RUN git submodule update
+RUN npm install -g markdownlint
 WORKDIR /root/.config/nvim
 RUN git checkout mine
 
