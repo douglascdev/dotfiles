@@ -1,7 +1,8 @@
 FROM fedora:42
 
-RUN sudo dnf install -y cascadia-mono-nf-fonts gcc git make npm nvim ripgrep shadow-utils unzip rubygems
-RUN sudo dnf copr enable che/nerd-fonts && sudo dnf copr enable che/nerd-fonts
+RUN sudo dnf install -y cascadia-mono-nf-fonts gcc git make npm nvim ripgrep shadow-utils unzip
+RUN sudo dnf copr enable che/nerd-fonts && sudo dnf install nerd-fonts
+RUN sudo dnf install jetbrains-mono-fonts
 RUN git clone --branch mine https://github.com/douglascdev/kickstart.nvim /root/.config/nvim
 
 WORKDIR /usr/src
