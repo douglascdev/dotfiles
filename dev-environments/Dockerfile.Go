@@ -1,7 +1,23 @@
 FROM fedora:42
 
-RUN sudo dnf update
-RUN sudo dnf install cascadia-mono-nf-fonts gcc git golang make npm nvim ripgrep shadow-utils unzip
-RUN go install github.com/go-delve/delve/cmd/dlv@latest
+RUN sudo dnf install -y cascadia-mono-nf-fonts gcc git golang make npm nvim ripgrep shadow-utils unzip
+
+WORKDIR /root
+RUN git clone https://github.com/douglascdev/dotfiles
+RUN mv dotfiles/* .
+RUN mv dotfiles/.* .
+RUN git submodule init
+RUN git submodule update
+WORKDIR /root/.config/nvim
+RUN git checkout mine
+
+RUN go install github.com/air-verse/air@v1.62.0
+ENV PATH="$PATH:/root/go/bin"
+
+WORKDIR /usr/src
+
 EXPOSE 8080
-CMD ["dlv", "debug", "--headless=true", "--listen=0.0.0.0:2345", "--api-version=2", "--accept-multiclient", "--", "go", "run", "main.go", "-cfg", "config.db", "-debug"]
+
+#CMD ["sleep", "infinity"]
+CMD ["air", "-c", ".air.toml"]
+
