@@ -24,6 +24,7 @@ RUN dnf install -y \
 # C++ stuff
 RUN dnf install -y \
         glfw\
+        glfw-devel\
         clang\
         clang-tools-extra && \
 dnf copr enable -y che/nerd-fonts && dnf install -y nerd-fonts && \
