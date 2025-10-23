@@ -31,14 +31,11 @@ RUN groupadd --gid ${GID} ${USERNAME} || true && \
 
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
-COPY --from=downloader /go/bin/air $HOME/go/bin
-COPY --from=downloader /go/bin/dlv $HOME/go/bin
-ENV PATH="$PATH:$HOME/go/bin"
+COPY --from=downloader /go/bin/air /home/${USERNAME}/go/bin/air
+COPY --from=downloader /go/bin/dlv /home/${USERNAME}/go/bin/dlv
+RUN echo PATH="$PATH:$HOME/go/bin" > /home/${USERNAME}/.bashrc
 RUN git clone --branch mine https://github.com/douglascdev/kickstart.nvim .config/nvim
 
 WORKDIR /usr/src
 
 EXPOSE 8080
-
-CMD ["air", "-c", ".air.toml"]
-
