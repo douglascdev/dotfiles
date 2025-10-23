@@ -6,19 +6,26 @@ go install github.com/go-delve/delve/cmd/dlv@v1.7.3
 
 FROM fedora:42 AS dev-container
 
+# nvim stuff
 RUN dnf install -y \
-        cascadia-mono-nf-fonts\
         gcc\
+        cascadia-mono-nf-fonts\
         git\
-        golang\
         make\ 
         npm\ 
         nvim\ 
-        glfw\
         ripgrep\ 
         shadow-utils\ 
         unzip\ 
-        jetbrains-mono-fonts && \
+        jetbrains-mono-fonts
+# Go stuff
+RUN dnf install -y \
+        golang
+# C++ stuff
+RUN dnf install -y \
+        glfw\
+        clang\
+        clang-tools-extra && \
 dnf copr enable -y che/nerd-fonts && dnf install -y nerd-fonts && \
 dnf clean all
 
@@ -27,7 +34,8 @@ ARG UID=1000
 ARG GID=1000
 
 RUN groupadd --gid ${GID} ${USERNAME} || true && \
-    useradd --system --uid ${UID} --gid ${GID} --create-home --shell /bin/bash ${USERNAME} || true
+    useradd --system --uid ${UID} --gid ${GID} --create-home --shell /bin/bash ${USERNAME} || true &&\
+    echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers
 
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
