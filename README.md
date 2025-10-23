@@ -16,7 +16,7 @@ git submodule update --remote --recursive
 Build the image:
 
 ```bash
-podman build -t devgo -f Dockerfile.Go
+podman build -t devgo -f Dockerfile.dev
 ```
 
 Make an `.air.toml` at the root of the project:
@@ -40,7 +40,7 @@ If needed, a `docker-compose.yml` as well:
 services:
   go-app:
     build:
-      dockerfile: Dockerfile.Go
+      dockerfile: Dockerfile.dev
       context: .
     restart: always
     ports:

@@ -1,8 +1,10 @@
 FROM golang:1.24 AS downloader
 WORKDIR /app
-RUN go install github.com/air-verse/air@v1.62.0
+RUN \
+go install github.com/air-verse/air@v1.62.0 && \
+go install github.com/go-delve/delve/cmd/dlv@v1.7.3
 
-FROM fedora:42 AS dev-container-go
+FROM fedora:42 AS dev-container
 
 RUN dnf install -y \
         cascadia-mono-nf-fonts\
@@ -12,6 +14,7 @@ RUN dnf install -y \
         make\ 
         npm\ 
         nvim\ 
+        glfw\
         ripgrep\ 
         shadow-utils\ 
         unzip\ 
@@ -29,6 +32,7 @@ RUN groupadd --gid ${GID} ${USERNAME} || true && \
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 COPY --from=downloader /go/bin/air $HOME/go/bin
+COPY --from=downloader /go/bin/dlv $HOME/go/bin
 ENV PATH="$PATH:$HOME/go/bin"
 RUN git clone --branch mine https://github.com/douglascdev/kickstart.nvim .config/nvim
 
