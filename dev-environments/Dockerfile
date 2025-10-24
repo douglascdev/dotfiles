@@ -1,9 +1,3 @@
-FROM golang:1.24 AS downloader
-WORKDIR /app
-RUN \
-go install github.com/air-verse/air@v1.62.0 && \
-go install github.com/go-delve/delve/cmd/dlv@v1.7.3
-
 FROM fedora:42 AS dev-container
 
 # nvim stuff
@@ -40,8 +34,9 @@ RUN groupadd --gid ${GID} ${USERNAME} || true && \
 
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
-COPY --from=downloader /go/bin/air /home/${USERNAME}/go/bin/air
-COPY --from=downloader /go/bin/dlv /home/${USERNAME}/go/bin/dlv
+RUN \
+        go install github.com/air-verse/air@v1.62.0 && \
+        go install github.com/go-delve/delve/cmd/dlv@v1.7.3
 RUN echo PATH="$PATH:$HOME/go/bin" > /home/${USERNAME}/.bashrc
 RUN git clone --branch mine https://github.com/douglascdev/kickstart.nvim .config/nvim
 
