@@ -16,7 +16,11 @@ git submodule update --remote --recursive
 Build the image:
 
 ```bash
-podman build -t devgo -f Dockerfile.dev
+cd project-folder
+mkdir -p .devcontainer
+cp -R devcontainer-feature .devcontainer
+mv devcontainer.json .devcontainer
+devcontainer up --workspace-folder ./ --remove-existing-container
 ```
 
 Make an `.air.toml` at the root of the project:
@@ -32,19 +36,4 @@ include_ext = ["go"]
 exclude_dir = [
   "frontend",
 ]
-```
-
-If needed, a `docker-compose.yml` as well:
-
-```yaml
-services:
-  go-app:
-    build:
-      dockerfile: Dockerfile.dev
-      context: .
-    restart: always
-    ports:
-      - "8080:8080"
-    volumes:
-      - ..:/usr/src:Z
 ```
